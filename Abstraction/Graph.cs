@@ -8,7 +8,7 @@
         /// </summary>
         public int NVertexes { get => _n; }
 
-        public abstract void AddEdge(int i, int j);
+        public abstract void AddEdge(int i, int j, int cost);
         public abstract void RemoveEdge(int i, int j);
         /// <summary>
         /// 
@@ -175,32 +175,46 @@
             return matrixADJ[from, to];
         }
 
-        public override void AddEdge(int i, int j)
+        public override void AddEdge(int i, int j, int cost)
         {
-            throw new NotImplementedException();
+            matrixADJ[i, j] = cost;
         }
 
         public override void RemoveEdge(int i, int j)
         {
-            throw new NotImplementedException();
+            matrixADJ[i, j] = 0;
         }
     }
 
     public class GraphOnADJList : Graph
     {
-        public override void AddEdge(int i, int j)
+        private List<(int indxVert,int cost)>[] adjList;
+        public GraphOnADJList(int vertices)
         {
-            throw new NotImplementedException();
+            adjList = new List<(int,int)>[vertices];
+            for (int i = 0; i < vertices; i++)
+            {
+                adjList[i] = new List<(int, int)>();
+            }
+        }
+        public override void AddEdge(int i, int j, int cost)
+        {
+            adjList[i].Add((j,cost));
+            adjList[j].Add((i,cost));
         }
 
         public override int EdgeLength(int x, int y)
         {
-            throw new NotImplementedException();
+            foreach (var edge in adjList[x])
+                if (y == edge.indxVert)
+                    return edge.cost;
+            return -1;
         }
 
         public override void RemoveEdge(int i, int j)
         {
-            throw new NotImplementedException();
+            adjList[i].RemoveAll(adj => adj.Item1 == j);
+            adjList[j].RemoveAll(adj => adj.Item1 == i);
         }
     }
 }
