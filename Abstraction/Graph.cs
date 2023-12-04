@@ -270,7 +270,7 @@
             foreach (var edge in adjList[x])
                 if (y == edge.indxVert)
                     return edge.cost;
-            return -1;
+            return 0;
         }
         /// <summary>
         /// Удаляет ребро между веришнами
