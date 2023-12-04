@@ -32,7 +32,7 @@
         /// <summary>
         /// Осуществлет DFS - поиск вглубину
         /// </summary>
-        public virtual void DFS()
+        public void DFS()
         {
             bool[] seen = new bool[NVertexes];
             DFS(GetVertexWithNoCons(), seen);
