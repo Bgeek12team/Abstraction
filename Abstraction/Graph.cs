@@ -1,4 +1,4 @@
-﻿namespace Abstraction
+﻿    namespace Abstraction
 {
     /// <summary>
     /// Абстрактный класс граф, предоставляющий алгоритмы над графами
