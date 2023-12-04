@@ -10,7 +10,7 @@ namespace Abstraction
     /// <summary>
     /// Интерфейс, отображающий возможность сортировки объектов произвольного типа
     /// </summary>
-    /// <typeparam name="T">Тип объекта</typeparam>
+    /// <typeparam name="T">Тип данных объекта</typeparam>
     public interface ISorter<T>
     {
         /// <summary>
