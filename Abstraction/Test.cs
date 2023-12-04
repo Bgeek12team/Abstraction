@@ -26,4 +26,18 @@ namespace Abstraction
             this.age = age;
         }
     }
+
+    static class P
+    {
+        static void Main()
+        {
+            Person Roma = new Person(177, 12);
+            Person Grisha = new Person(172, 18);
+            Person[] kalibr = new Person[] { Roma, Grisha };
+            UniSorter<Person> politech = new UniSorter<Person>(kalibr);
+
+            politech.BubbleSort((p1, p2) => p1.Height - p2.Height, (p1, p2) => p1.Age - p2.Age);
+
+        }
+    }
 }
