@@ -247,7 +247,7 @@
     /// </summary>
     public class GraphOnADJList : Graph
     {
-        private List<(int indxVert,int cost)>[] adjList;
+        private List<(int indxVert, int cost)>[] adjList;
         /// <summary>
         /// Добавляет ребро между данными вершинами
         /// </summary>
