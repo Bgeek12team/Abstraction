@@ -11,35 +11,41 @@ namespace Abstraction
         static void Main()
         {
             int n = 100;
-            Person[] kalibr = new Person[100];
+            Person[] kalibr = new Person[n];
             for (int i = 0; i < n; i++)
             {
                 kalibr[i] = new Person();
             }
+
             UniSorter<Person> politech = new UniSorter<Person>(kalibr);
+            ISorter<Person>.Comparator compareByHeight
+                = new ISorter<Person>.Comparator((p1, p2) => p1.Height - p2.Height);
+            ISorter<Person>.Comparator compareByAge
+                = new ISorter<Person>.Comparator((p1, p2) => p1.Age - p2.Age);
+
             Console.WriteLine(politech);
 
-            politech.BubbleSort((p1, p2) => p1.Height - p2.Height, (p1, p2) => p1.Age - p2.Age);
+            politech.BubbleSort(compareByHeight, compareByAge);
             Console.WriteLine(politech);
             politech.Randomize();
             Console.WriteLine(politech);
 
-            politech.BogoBogoSort((p1, p2) => p1.Height - p2.Height, (p1, p2) => p1.Age - p2.Age);
+            politech.BogoBogoSort(compareByHeight, compareByAge);
             Console.WriteLine(politech);
             politech.Randomize();
             Console.WriteLine(politech);
 
-            politech.InsertSort((p1, p2) => p1.Height - p2.Height, (p1, p2) => p1.Age - p2.Age);
+            politech.InsertSort(compareByHeight, compareByAge);
             Console.WriteLine(politech);
             politech.Randomize();
             Console.WriteLine(politech);
 
-            politech.ShellSort((p1, p2) => p1.Height - p2.Height, (p1, p2) => p1.Age - p2.Age);
+            politech.ShellSort(compareByHeight, compareByAge);
             Console.WriteLine(politech);
             politech.Randomize();
             Console.WriteLine(politech);
 
-            politech.FastSort((p1, p2) => p1.Height - p2.Height, (p1, p2) => p1.Age - p2.Age);
+            politech.FastSort(compareByHeight, compareByAge);
             Console.WriteLine(politech);
             politech.Randomize();
             Console.WriteLine(politech);
