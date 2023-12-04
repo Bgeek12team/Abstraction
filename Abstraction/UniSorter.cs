@@ -118,7 +118,7 @@ namespace Abstraction
         {
             for (int i = 0; i<_values.Count; i ++)
             {
-                for ( int j = i + 1; j < _values.Count; j++)
+                for (int j = i + 1; j < _values.Count; j++)
                 {
                     if (GreaterOrEquals(comparators, _values[i], _values[j]))
                         Swap(i, j);

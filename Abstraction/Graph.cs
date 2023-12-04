@@ -213,31 +213,30 @@
             _n = N;
         }
         /// <summary>
-        /// 
+        /// Возвращает длину ребра между данными вершинами
         /// </summary>
-        /// <param name="from"></param>
-        /// <param name="to"></param>
-        /// <returns></returns>
+        /// <param name="i">Вершина, из которой выходит ребро</param>
+        /// <param name="j">Вершина, в которую входит ребро</param>
+        /// <returns>Длина ребра между вершинами</returns>
         public override int EdgeLength(int from, int to)
         {
             return matrixADJ[from, to];
         }
         /// <summary>
-        /// 
+        /// Добавляет ребро между данными вершинами
         /// </summary>
-        /// <param name="i"></param>
-        /// <param name="j"></param>
-        /// <exception cref="NotImplementedException"></exception>
+        /// <param name="i">Вершина, из которой выходит ребро</param>
+        /// <param name="j">Вершина, в которую входит ребро</param>
+        /// <param name="len">Длина ребра между вершинами</param>
         public override void AddEdge(int i, int j, int len)
         {
             throw new NotImplementedException();
         }
         /// <summary>
-        /// 
+        /// Удаляет ребро между веришнами
         /// </summary>
-        /// <param name="i"></param>
-        /// <param name="j"></param>
-        /// <exception cref="NotImplementedException"></exception>
+        /// <param name="i">Вершина, из которой выходит удаляемое ребро</param>
+        /// <param name="j">Вершина, в которую входит удаляемое ребро</param>
         public override void RemoveEdge(int i, int j)
         {
             throw new NotImplementedException();
@@ -249,32 +248,30 @@
     public class GraphOnADJList : Graph
     {
         /// <summary>
-        /// 
+        /// Добавляет ребро между данными вершинами
         /// </summary>
-        /// <param name="i"></param>
-        /// <param name="j"></param>
-        /// <exception cref="NotImplementedException"></exception>
+        /// <param name="i">Вершина, из которой выходит ребро</param>
+        /// <param name="j">Вершина, в которую входит ребро</param>
+        /// <param name="len">Длина ребра между вершинами</param>
         public override void AddEdge(int i, int j, int len)
         {
             throw new NotImplementedException();
         }
         /// <summary>
-        /// 
+        /// Возвращает длину ребра между данными вершинами
         /// </summary>
-        /// <param name="x"></param>
-        /// <param name="y"></param>
-        /// <returns></returns>
-        /// <exception cref="NotImplementedException"></exception>
+        /// <param name="i">Вершина, из которой выходит ребро</param>
+        /// <param name="j">Вершина, в которую входит ребро</param>
+        /// <returns>Длина ребра между вершинами</returns>
         public override int EdgeLength(int x, int y)
         {
             throw new NotImplementedException();
         }
         /// <summary>
-        /// 
+        /// Удаляет ребро между веришнами
         /// </summary>
-        /// <param name="i"></param>
-        /// <param name="j"></param>
-        /// <exception cref="NotImplementedException"></exception>
+        /// <param name="i">Вершина, из которой выходит удаляемое ребро</param>
+        /// <param name="j">Вершина, в которую входит удаляемое ребро</param>
         public override void RemoveEdge(int i, int j)
         {
             throw new NotImplementedException();
