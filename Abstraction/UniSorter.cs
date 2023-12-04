@@ -178,7 +178,7 @@ namespace Abstraction
             throw new NotImplementedException();
         }
         /// <summary>
-        /// 
+        /// Выполняет обмен элементов
         /// </summary>
         /// <param name="i"></param>
         /// <param name="j"></param>
@@ -189,12 +189,16 @@ namespace Abstraction
             _values[j] = temp;
         }
         /// <summary>
-        /// 
+        /// Проверяет 2 элемента на основе массива функций компараторов
+        /// на равернство
         /// </summary>
-        /// <param name="comparators"></param>
-        /// <param name="val1"></param>
-        /// <param name="val2"></param>
-        /// <returns></returns>
+        /// <param name="comparators">Массив фукнций компараторов</param>
+        /// <param name="val1">Первый сравниваемый элемент</param>
+        /// <param name="val2">Второй сравниваемый элемент</param>
+        /// <returns>
+        /// True: val1 >= val2
+        /// False: val < va2
+        /// </returns>
         private static bool GreaterOrEquals(ISorter<T>.Comparator[] comparators, T val1, T val2)
         {
             for (int i = 0; i < comparators.Length; i++)
@@ -204,6 +208,27 @@ namespace Abstraction
                 if (res < 0) return false;
             }
             return true;
+        }
+        /// <summary>
+        /// Проверяет 2 элемента на основе массива функций компараторов
+        /// на равернство
+        /// </summary>
+        /// <param name="comparators">Массив фукнций компараторов</param>
+        /// <param name="val1">Первый сравниваемый элемент</param>
+        /// <param name="val2">Второй сравниваемый элемент</param>
+        /// <returns>
+        /// True: val1 > val2
+        /// False: val <= va2
+        /// </returns>
+        private static bool Greater(ISorter<T>.Comparator[] comparators, T val1, T val2)
+        {
+            for (int i = 0; i < comparators.Length; i++)
+            {
+                int res = comparators[i](val1, val2);
+                if (res > 0) return true;
+                if (res < 0) return false;
+            }
+            return false;
         }
 
         #region IListMethods
