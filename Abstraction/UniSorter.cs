@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -27,25 +28,13 @@ namespace Abstraction
         void BogoBogoSort(params ISorter<T>.Comparator[] comparators);
 
     }
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <typeparam name="T"></typeparam>
     public class UniSorter<T> : IList<T>, ISorter<T>
     {
         private IList<T> _values;
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="values"></param>
         public UniSorter(IList<T> values)
         {
             _values = values;
         }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="comparators"></param>
         public void BubbleSort(params ISorter<T>.Comparator[] comparators)
         {
             for (int i = 0; i<_values.Count; i ++)
@@ -61,22 +50,111 @@ namespace Abstraction
 
         public void InsertSort(params ISorter<T>.Comparator[] comparators)
         {
-            throw new NotImplementedException();
+            for (int i = 1; i < _values.Count; i++)
+            {
+                T k = _values[i];
+                int j = i - 1;
+                while (j >= 0 && Greater(comparators, _values[j], k))
+                {
+                    _values[j + 1] = _values[j];
+                    j--;
+                }
+                _values[j + 1] = k;
+            }
         }
-
+        /// <summary>
+        /// Выполняет сортировку Шелла на основе данных
+        /// функций сортировки
+        /// </summary>
+        /// <param name="comparators">
+        /// Набор функций-компараторов, на основе которых будет выполняться сравнение 
+        /// объектов и соответсвенно сортировка. В случае, если i-тая функция покажет равенство,
+        /// будет выполняться сравнение в соотвтствии с i+1-ой
+        /// </param>
         public void ShellSort(params ISorter<T>.Comparator[] comparators)
         {
-            throw new NotImplementedException();
+            int n = _values.Count;
+            int gap = n / 2;
+
+            while (gap > 0)
+            {
+                for (int i = gap; i < n; i++)
+                {
+                    T temp = _values[i];
+                    int j = i;
+
+                    while (j >= gap && GreaterOrEquals(comparators, _values[j - gap], temp))
+                    {
+                        _values[j] = _values[j - gap];
+                        j -= gap;
+                    }
+
+                    _values[j] = temp;
+                }
+
+                gap /= 2;
+            }
         }
 
         public void FastSort(params ISorter<T>.Comparator[] comparators)
         {
-            throw new NotImplementedException();
+            int low = 0;
+            int high = _values.Count - 1;
+
+            FastSortInternal(comparators, low, high);
+        }
+        private void FastSortInternal(ISorter<T>.Comparator[] comparators, int low, int high)
+        {
+            if (low < high)
+            {
+                int pivotIndex = Partition(comparators, low, high);
+
+                FastSortInternal(comparators, low, pivotIndex - 1);
+                FastSortInternal(comparators, pivotIndex + 1, high);
+            }
+        }
+
+        private int Partition(ISorter<T>.Comparator[] comparators, int low, int high)
+        {
+            T pivot = _values[high];
+            int i = low - 1;
+
+            for (int j = low; j < high; j++)
+            {
+                if (GreaterOrEquals(comparators, _values[j], pivot))
+                {
+                    i++;
+                    Swap(i, j);
+                }
+            }
+
+            Swap(i + 1, high);
+            return i + 1;
         }
 
         public void BogoBogoSort(params ISorter<T>.Comparator[] comparators)
         {
             throw new NotImplementedException();
+        }
+
+        public void Randomize()
+        {
+            int[] index = new int[_values.Count];
+            Random rnd = new Random();
+            for (int i = 0; i < index.Length; i++)
+            {
+                int rndIndex = rnd.Next(0, index.Length - 1);
+                Swap(i, rndIndex);
+            }
+        }
+        public override string ToString()
+        {
+            string res = String.Empty;
+            foreach (T element in _values)
+            {
+                res += element.ToString() + " ";
+            }
+            return res;
         }
         /// <summary>
         /// 
@@ -89,13 +167,6 @@ namespace Abstraction
             _values[i] = _values[j];
             _values[j] = temp;
         }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="comparators"></param>
-        /// <param name="val1"></param>
-        /// <param name="val2"></param>
-        /// <returns></returns>
         private static bool GreaterOrEquals(ISorter<T>.Comparator[] comparators, T val1, T val2)
         {
             for (int i = 0; i < comparators.Length; i++)
