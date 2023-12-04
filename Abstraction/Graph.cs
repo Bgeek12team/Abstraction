@@ -1,44 +1,49 @@
 ﻿namespace Abstraction
 {
     /// <summary>
-    /// 
+    /// Абстрактный класс граф, предоставляющий алгоритмы над графами
+    /// не зависящие от конкретной реализации
     /// </summary>
    public abstract class Graph
    {
         /// <summary>
-        /// 
+        /// количество вершин
         /// </summary>
         protected int _n;
         /// <summary>
-        /// 
+        /// Количество вершин в графе
         /// </summary>
         public int NVertexes { get => _n; }
         /// <summary>
-        /// 
+        /// Добавляет ребро между данными вершинами
         /// </summary>
-        /// <param name="i"></param>
-        /// <param name="j"></param>
-        public abstract void AddEdge(int i, int j);
+        /// <param name="i">Вершина, из которой выходит ребро</param>
+        /// <param name="j">Вершина, в которую входит ребро</param>
+        /// <param name="len">Длина ребра между вершинами</param>
+        public abstract void AddEdge(int i, int j, int len);
         /// <summary>
-        /// 
+        /// Удаляет ребро между веришнами
         /// </summary>
-        /// <param name="i"></param>
-        /// <param name="j"></param>
+        /// <param name="i">Вершина, из которой выходит удаляемое ребро</param>
+        /// <param name="j">Вершина, в которую входит удаляемое ребро</param>
         public abstract void RemoveEdge(int i, int j);
         /// <summary>
-        /// 
+        /// Возвращает длину ребра между данными вершинами
         /// </summary>
-        /// <param name="x"></param>
-        /// <param name="y"></param>
-        /// <returns></returns>
-        public abstract int EdgeLength(int x, int y);
+        /// <param name="i">Вершина, из которой выходит ребро</param>
+        /// <param name="j">Вершина, в которую входит ребро</param>
+        /// <returns>Длина ребра между вершинами</returns>
+        public abstract int EdgeLength(int i, int j);
         /// <summary>
-        /// 
+        /// Проверяет вершины на смежность
         /// </summary>
-        /// <param name="a"></param>
-        /// <param name="b"></param>
-        /// <returns></returns>
-        public bool IsAdjastent(int a, int b)
+        /// <param name="a">Первая проверяемая вершина</param>
+        /// <param name="b">Вторая проверяемая вершина</param>
+        /// <returns>
+        /// True: вершины смежны, есть ребро из первой во вторую
+        /// False: все иные случаи
+        /// </returns>
+        public virtual bool IsAdjastent(int a, int b)
         {
             return EdgeLength(a, b) != 0;
         }
@@ -87,11 +92,13 @@
             }
         }
         /// <summary>
-        /// 
+        /// Возвращает смежную вершину к данной, которой так же нет в массиве
+        /// просмотренных вершин
         /// </summary>
-        /// <param name="V"></param>
-        /// <param name="seen"></param>
-        /// <returns></returns>
+        /// <param name="V">Данная вершина</param>
+        /// <param name="seen">Массив просмотренных вершин</param>
+        /// <returns>Первая смежная вершина к данной, которой так же нет в массиве,
+        /// -1 если она отуствует</returns>
         protected virtual int FindAdjNotSeen(int V, bool[] seen)
         {
             for(int i =0; i < NVertexes; i++)
@@ -102,9 +109,10 @@
             return -1;
         }
         /// <summary>
-        /// 
+        /// Находит вершину, в которую не входит ни одно ребро
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Вершина в которую не входит ни одно ребро,
+        /// -1 если оная отсутсвует</returns>
         protected virtual int GetVertexWithNoCons()
         {
             for(int i = 0; i < NVertexes; i++)
@@ -112,7 +120,8 @@
                 bool hasNoCons = true;
                 for (int j = 0; j < NVertexes; j++)
                 {
-                    if(IsAdjastent(i,j))
+                    if (i == j) continue;
+                    if(IsAdjastent(j,i))
                     {
                         hasNoCons = false;
                         break;
@@ -168,25 +177,26 @@
         }
     }
     /// <summary>
-    /// 
+    /// Реализует граф на основе матрицы смежности
     /// </summary>
     public class GraphOnMatrixADJ : Graph
     {
         /// <summary>
-        /// 
+        /// матрица смежности
         /// </summary>
-        protected int[,] matrixADJ { get; set; }
+        protected int[,] matrixADJ;
         /// <summary>
-        /// 
+        /// Создает экземпляр класса на основе матрицы смежности, где
+        /// 0 - отсутвие ребра между вершинами
         /// </summary>
-        /// <param name="matrixADJ"></param>
+        /// <param name="matrixADJ">Матрица смежности графа</param>
         public GraphOnMatrixADJ(int[,] matrixADJ)
         {
             this.matrixADJ = matrixADJ;
             _n = matrixADJ.GetLength(0);
         }
         /// <summary>
-        /// 
+        /// Создает новый пустой граф с одной вершиной
         /// </summary>
         public GraphOnMatrixADJ()
         {
@@ -194,9 +204,9 @@
             _n = 1;
         }
         /// <summary>
-        /// 
+        /// Создает граф данного размера без связей между вершинами
         /// </summary>
-        /// <param name="N"></param>
+        /// <param name="N">Количество вершин в графе</param>
         public GraphOnMatrixADJ(int N)
         {
             matrixADJ = new int[N, N];
@@ -218,7 +228,7 @@
         /// <param name="i"></param>
         /// <param name="j"></param>
         /// <exception cref="NotImplementedException"></exception>
-        public override void AddEdge(int i, int j)
+        public override void AddEdge(int i, int j, int len)
         {
             throw new NotImplementedException();
         }
@@ -244,7 +254,7 @@
         /// <param name="i"></param>
         /// <param name="j"></param>
         /// <exception cref="NotImplementedException"></exception>
-        public override void AddEdge(int i, int j)
+        public override void AddEdge(int i, int j, int len)
         {
             throw new NotImplementedException();
         }
