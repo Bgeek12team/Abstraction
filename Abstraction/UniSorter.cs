@@ -28,25 +28,13 @@ namespace Abstraction
         void BogoBogoSort(params ISorter<T>.Comparator[] comparators);
 
     }
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <typeparam name="T"></typeparam>
     public class UniSorter<T> : IList<T>, ISorter<T>
     {
         private IList<T> _values;
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="values"></param>
         public UniSorter(IList<T> values)
         {
             _values = values;
         }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="comparators"></param>
         public void BubbleSort(params ISorter<T>.Comparator[] comparators)
         {
             for (int i = 0; i<_values.Count; i ++)
@@ -168,24 +156,12 @@ namespace Abstraction
             }
             return res;
         }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="i"></param>
-        /// <param name="j"></param>
         private void Swap(int i, int j)
         {
             T temp = _values[i];
             _values[i] = _values[j];
             _values[j] = temp;
         }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="comparators"></param>
-        /// <param name="val1"></param>
-        /// <param name="val2"></param>
-        /// <returns></returns>
         private static bool GreaterOrEquals(ISorter<T>.Comparator[] comparators, T val1, T val2)
         {
             for (int i = 0; i < comparators.Length; i++)
