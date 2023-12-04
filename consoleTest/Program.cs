@@ -10,7 +10,7 @@ namespace Abstraction
     {
         static void Main()
         {
-            int n = 100;
+            int n = 4;
             Person[] kalibr = new Person[n];
             for (int i = 0; i < n; i++)
             {
@@ -25,30 +25,25 @@ namespace Abstraction
 
             Console.WriteLine(politech);
 
-            politech.BubbleSort(compareByHeight, compareByAge);
+            politech.BubbleSort(compareByHeight);
             Console.WriteLine(politech);
             politech.Randomize();
-            Console.WriteLine(politech);
 
-            politech.BogoBogoSort(compareByHeight, compareByAge);
+            politech.BogoBogoSort(compareByHeight);
             Console.WriteLine(politech);
             politech.Randomize();
-            Console.WriteLine(politech);
 
-            politech.InsertSort(compareByHeight, compareByAge);
+            politech.InsertSort(compareByHeight);
             Console.WriteLine(politech);
             politech.Randomize();
-            Console.WriteLine(politech);
 
-            politech.ShellSort(compareByHeight, compareByAge);
+            politech.ShellSort(compareByHeight);
             Console.WriteLine(politech);
             politech.Randomize();
-            Console.WriteLine(politech);
 
-            politech.FastSort(compareByHeight, compareByAge);
+            politech.FastSort(compareByHeight);
             Console.WriteLine(politech);
             politech.Randomize();
-            Console.WriteLine(politech);
         }
     }
 

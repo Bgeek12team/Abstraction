@@ -217,7 +217,7 @@ namespace Abstraction
 
             for (int j = low; j < high; j++)
             {
-                if (GreaterOrEquals(comparators, _values[j], pivot))
+                if (!GreaterOrEquals(comparators, _values[j], pivot))
                 {
                     i++;
                     Swap(i, j);
@@ -226,6 +226,16 @@ namespace Abstraction
 
             Swap(i + 1, high);
             return i + 1;
+        }
+
+        private bool IsSorted(ISorter<T>.Comparator[] comparators)
+        {
+            for (int i = 0; i < _values.Count - 1; i++)
+            {
+                if (!Greater(comparators, _values[i], _values[i + 1]))
+                    return false;
+            }
+            return true;
         }
 
         /// <summary>
@@ -239,7 +249,25 @@ namespace Abstraction
         /// </param>
         public void BogoBogoSort(params ISorter<T>.Comparator[] comparators)
         {
-            throw new NotImplementedException();
+
+            if (!IsSorted(comparators))
+            {
+                Shuffle();
+            }
+
+        }
+        private void Shuffle()
+        {
+            int n = _values.Count;
+            Random random = new Random();
+            while (n > 1)
+            {
+                n--;
+                for (int i = 0; i < n; i++)
+                    for (int j = 0; j < n; j++)
+                        Swap(random.Next(j, n), random.Next(i, n));
+            }
+
         }
 
         public void Randomize()
