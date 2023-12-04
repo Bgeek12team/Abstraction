@@ -61,7 +61,17 @@ namespace Abstraction
 
         public void InsertSort(params ISorter<T>.Comparator[] comparators)
         {
-            throw new NotImplementedException();
+            for (int i = 1; i < _values.Count; i++)
+            {
+                T k = _values[i];
+                int j = i - 1;
+                while (j >= 0 && Greater(comparators, _values[j], k))
+                {
+                    _values[j + 1] = _values[j];
+                    j--;
+                }
+                _values[j + 1] = k;
+            }
         }
         /// <summary>
         /// Выполняет сортировку Шелла на основе данных
