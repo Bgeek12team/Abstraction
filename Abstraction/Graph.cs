@@ -222,7 +222,12 @@
         {
             return matrixADJ[from, to];
         }
-
+        /// <summary>
+        /// Добавляет ребро между данными вершинами
+        /// </summary>
+        /// <param name="i">Вершина, из которой выходит ребро</param>
+        /// <param name="j">Вершина, в которую входит ребро</param>
+        /// <param name="len">Длина ребра между вершинами</param>
         public override void AddEdge(int i, int j, int len)
         {
             matrixADJ[i, j] = len;
@@ -242,7 +247,13 @@
     /// </summary>
     public class GraphOnADJList : Graph
     {
-        private List<(int indxVert, int cost)>[] adjList;
+        private List<(int indxVert,int cost)>[] adjList;
+        /// <summary>
+        /// Добавляет ребро между данными вершинами
+        /// </summary>
+        /// <param name="i">Вершина, из которой выходит ребро</param>
+        /// <param name="j">Вершина, в которую входит ребро</param>
+        /// <param name="len">Длина ребра между вершинами</param>
         public override void AddEdge(int i, int j, int len)
         {
             adjList[i].Add((j,len));
