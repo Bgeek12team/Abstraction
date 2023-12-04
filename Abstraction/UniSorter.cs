@@ -8,6 +8,10 @@ using System.Threading.Tasks;
 
 namespace Abstraction
 {
+    /// <summary>
+    /// Интерфейс, отображающий возможность сортировки объектов произвольного типа
+    /// </summary>
+    /// <typeparam name="T">Тип данных объекта</typeparam>
     public interface ISorter<T>
     {
         /// <summary>
@@ -21,33 +25,116 @@ namespace Abstraction
         /// -1: val1 < val2
         /// </returns>
         delegate int Comparator(T val1, T val2);
+        /// <summary>
+        /// Выполняет пузырьковую сортировку на основе данных
+        /// функций сортировки
+        /// </summary>
+        /// <param name="comparators">
+        /// Набор функций-компараторов, на основе которых будет выполняться сравнение 
+        /// объектов и соответсвенно сортировка. В случае, если i-тая функция покажет равенство,
+        /// будет выполняться сравнение в соотвтствии с i+1-ой
+        /// </param>
         void BubbleSort(params ISorter<T>.Comparator[] comparators);
+        /// <summary>
+        /// Выполняет сортировку вставками на основе данных
+        /// функций сортировки
+        /// </summary>
+        /// <param name="comparators">
+        /// Набор функций-компараторов, на основе которых будет выполняться сравнение 
+        /// объектов и соответсвенно сортировка. В случае, если i-тая функция покажет равенство,
+        /// будет выполняться сравнение в соотвтствии с i+1-ой
+        /// </param>
         void InsertSort(params ISorter<T>.Comparator[] comparators);
+        /// <summary>
+        /// Выполняет сортировку Шелла на основе данных
+        /// функций сортировки
+        /// </summary>
+        /// <param name="comparators">
+        /// Набор функций-компараторов, на основе которых будет выполняться сравнение 
+        /// объектов и соответсвенно сортировка. В случае, если i-тая функция покажет равенство,
+        /// будет выполняться сравнение в соотвтствии с i+1-ой
+        /// </param>
         void ShellSort(params ISorter<T>.Comparator[] comparators);
+        /// <summary>
+        /// Выполняет быструю сортировку на основе данных
+        /// функций сортировки
+        /// </summary>
+        /// <param name="comparators">
+        /// Набор функций-компараторов, на основе которых будет выполняться сравнение 
+        /// объектов и соответсвенно сортировка. В случае, если i-тая функция покажет равенство,
+        /// будет выполняться сравнение в соотвтствии с i+1-ой
+        /// </param>
         void FastSort(params ISorter<T>.Comparator[] comparators);
+        /// <summary>
+        /// Выполняет Bogo Bogo сортировку на основе данных
+        /// функций сортировки
+        /// </summary>
+        /// <param name="comparators">
+        /// Набор функций-компараторов, на основе которых будет выполняться сравнение 
+        /// объектов и соответсвенно сортировка. В случае, если i-тая функция покажет равенство,
+        /// будет выполняться сравнение в соотвтствии с i+1-ой
+        /// </param>
         void BogoBogoSort(params ISorter<T>.Comparator[] comparators);
 
     }
+    /// <summary>
+    /// Класс-надстройка над индексированной последовательностью элементов,
+    /// предоставляющий методы сортировки объектов
+    /// по произвольному набору методов-компараторов
+    /// </summary>
+    /// <typeparam name="T">Тип сортируемых данных</typeparam>
     public class UniSorter<T> : IList<T>, ISorter<T>
     {
+        /// <summary>
+        /// Последовательности элементов
+        /// </summary>
         private IList<T> _values;
+        /// <summary>
+        /// Создает экземпляр класса, создавая в качестве сортируемой последовательности
+        /// новый пустой список
+        /// </summary>
+        public UniSorter()
+        {
+            _values = new List<T>();
+        }
+        /// <summary>
+        /// Создает экземпляр класса на основе последовательности 
+        /// элементов 
+        /// </summary>
+        /// <param name="values"></param>
         public UniSorter(IList<T> values)
         {
             _values = values;
         }
+        /// <summary>
+        /// Выполняет пузырьковую сортировку на основе данных
+        /// функций сортировки
+        /// </summary>
+        /// <param name="comparators">
+        /// Набор функций-компараторов, на основе которых будет выполняться сравнение 
+        /// объектов и соответсвенно сортировка. В случае, если i-тая функция покажет равенство,
+        /// будет выполняться сравнение в соотвтствии с i+1-ой
+        /// </param>
         public void BubbleSort(params ISorter<T>.Comparator[] comparators)
         {
-            for (int i = 0; i<_values.Count; i ++)
+            for (int i = 0; i < _values.Count; i++)
             {
-                for ( int j = i; j < _values.Count; j++)
+                for (int j = i + 1; j < _values.Count; j++)
                 {
                     if (GreaterOrEquals(comparators, _values[i], _values[j]))
                         Swap(i, j);
                 }
             }
         }
-
-
+        /// <summary>
+        /// Выполняет сортировку вставками на основе данных
+        /// функций сортировки
+        /// </summary>
+        /// <param name="comparators">
+        /// Набор функций-компараторов, на основе которых будет выполняться сравнение 
+        /// объектов и соответсвенно сортировка. В случае, если i-тая функция покажет равенство,
+        /// будет выполняться сравнение в соотвтствии с i+1-ой
+        /// </param>
         public void InsertSort(params ISorter<T>.Comparator[] comparators)
         {
             for (int i = 1; i < _values.Count; i++)
@@ -96,6 +183,15 @@ namespace Abstraction
             }
         }
 
+        /// <summary>
+        /// Выполняет быструю сортировку на основе данных
+        /// функций сортировки
+        /// </summary>
+        /// <param name="comparators">
+        /// Набор функций-компараторов, на основе которых будет выполняться сравнение 
+        /// объектов и соответсвенно сортировка. В случае, если i-тая функция покажет равенство,
+        /// будет выполняться сравнение в соотвтствии с i+1-ой
+        /// </param>
         public void FastSort(params ISorter<T>.Comparator[] comparators)
         {
             int low = 0;
@@ -132,6 +228,15 @@ namespace Abstraction
             return i + 1;
         }
 
+        /// <summary>
+        /// Выполняет Bogo Bogo сортировку на основе данных
+        /// функций сортировки
+        /// </summary>
+        /// <param name="comparators">
+        /// Набор функций-компараторов, на основе которых будет выполняться сравнение 
+        /// объектов и соответсвенно сортировка. В случае, если i-тая функция покажет равенство,
+        /// будет выполняться сравнение в соотвтствии с i+1-ой
+        /// </param>
         public void BogoBogoSort(params ISorter<T>.Comparator[] comparators)
         {
             throw new NotImplementedException();
@@ -156,12 +261,28 @@ namespace Abstraction
             }
             return res;
         }
+        /// <summary>
+        /// Выполняет обмен элементов
+        /// </summary>
+        /// <param name="i"></param>
+        /// <param name="j"></param>
         private void Swap(int i, int j)
         {
             T temp = _values[i];
             _values[i] = _values[j];
             _values[j] = temp;
         }
+        /// <summary>
+        /// Проверяет 2 элемента на основе массива функций компараторов
+        /// на равернство
+        /// </summary>
+        /// <param name="comparators">Массив фукнций компараторов</param>
+        /// <param name="val1">Первый сравниваемый элемент</param>
+        /// <param name="val2">Второй сравниваемый элемент</param>
+        /// <returns>
+        /// True: val1 >= val2
+        /// False: val < va2
+        /// </returns>
         private static bool GreaterOrEquals(ISorter<T>.Comparator[] comparators, T val1, T val2)
         {
             for (int i = 0; i < comparators.Length; i++)
@@ -173,6 +294,27 @@ namespace Abstraction
             return true;
         }
 
+        /// <summary>
+        /// Проверяет 2 элемента на основе массива функций компараторов
+        /// на равернство
+        /// </summary>
+        /// <param name="comparators">Массив фукнций компараторов</param>
+        /// <param name="val1">Первый сравниваемый элемент</param>
+        /// <param name="val2">Второй сравниваемый элемент</param>
+        /// <returns>
+        /// True: val1 > val2
+        /// False: val <= va2
+        /// </returns>
+        private static bool Greater(ISorter<T>.Comparator[] comparators, T val1, T val2)
+        {
+            for (int i = 0; i < comparators.Length; i++)
+            {
+                int res = comparators[i](val1, val2);
+                if (res > 0) return true;
+                if (res < 0) return false;
+            }
+            return false;
+        }
         #region IListMethods
 
         public T this[int index] { get => _values[index]; set => _values[index] = value; }
