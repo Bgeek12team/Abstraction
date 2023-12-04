@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -176,6 +177,26 @@ namespace Abstraction
         public void BogoBogoSort(params ISorter<T>.Comparator[] comparators)
         {
             throw new NotImplementedException();
+        }
+
+        public void Randomize()
+        {
+            int[] index = new int[_values.Count];
+            Random rnd = new Random();
+            for (int i = 0; i < index.Length; i++)
+            {
+                int rndIndex = rnd.Next(0, index.Length - 1);
+                Swap(i, rndIndex);
+            }
+        }
+        public override string ToString()
+        {
+            string res = String.Empty;
+            foreach (T element in _values)
+            {
+                res += element.ToString() + " ";
+            }
+            return res;
         }
         /// <summary>
         /// 

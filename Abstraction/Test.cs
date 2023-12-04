@@ -25,19 +25,50 @@ namespace Abstraction
             this.height = height;
             this.age = age;
         }
+
+        public override string ToString()
+        {
+            return ("Height = " + height + ", Age = " + age + "; ");
+        }
     }
 
     static class P
     {
         static void Main()
         {
-            Person Roma = new Person(177, 12);
-            Person Grisha = new Person(172, 18);
-            Person[] kalibr = new Person[] { Roma, Grisha };
+            int n = 100;
+            Person[] kalibr = new Person[100];
+            for (int i = 0; i < n; i++)
+            {
+                kalibr[i] = new Person();
+            }
             UniSorter<Person> politech = new UniSorter<Person>(kalibr);
+            Console.WriteLine(politech);
 
             politech.BubbleSort((p1, p2) => p1.Height - p2.Height, (p1, p2) => p1.Age - p2.Age);
+            Console.WriteLine(politech);
+            politech.Randomize();
+            Console.WriteLine(politech);
 
+            politech.BogoBogoSort((p1, p2) => p1.Height - p2.Height, (p1, p2) => p1.Age - p2.Age);
+            Console.WriteLine(politech);
+            politech.Randomize();
+            Console.WriteLine(politech);
+
+            politech.InsertSort((p1, p2) => p1.Height - p2.Height, (p1, p2) => p1.Age - p2.Age);
+            Console.WriteLine(politech);
+            politech.Randomize();
+            Console.WriteLine(politech);
+
+            politech.ShellSort((p1, p2) => p1.Height - p2.Height, (p1, p2) => p1.Age - p2.Age);
+            Console.WriteLine(politech);
+            politech.Randomize();
+            Console.WriteLine(politech);
+
+            politech.FastSort((p1, p2) => p1.Height - p2.Height, (p1, p2) => p1.Age - p2.Age);
+            Console.WriteLine(politech);
+            politech.Randomize();
+            Console.WriteLine(politech);
         }
     }
 }
