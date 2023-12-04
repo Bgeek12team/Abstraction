@@ -136,7 +136,22 @@ namespace Abstraction
         /// </param>
         public void InsertSort(params ISorter<T>.Comparator[] comparators)
         {
-            throw new NotImplementedException();
+            for (int i = 1; i < comparators.Length; i++)
+            {
+                ISorter<T>.Comparator k = comparators[i];
+                int j = i - 1;
+                while (j >= 0 && GreaterOrEquals(comparators, _values[i], _values[j]))
+                {
+                    comparators[j + 1] = comparators[j];
+                    j--;
+                }
+                comparators[j + 1] = k;
+                for (int o = 0; o < comparators.Length; o++)
+                {
+                    Console.Write(comparators[o] + " ");
+                }
+                Console.WriteLine();
+            }
         }
         /// <summary>
         /// Выполняет сортировку Шелла на основе данных
@@ -149,7 +164,27 @@ namespace Abstraction
         /// </param>
         public void ShellSort(params ISorter<T>.Comparator[] comparators)
         {
-            throw new NotImplementedException();
+            int n = _values.Count;
+            int gap = n / 2;
+
+            while (gap > 0)
+            {
+                for (int i = gap; i < n; i++)
+                {
+                    T temp = _values[i];
+                    int j = i;
+
+                    while (j >= gap && GreaterOrEquals(comparators, _values[j - gap], temp))
+                    {
+                        _values[j] = _values[j - gap];
+                        j -= gap;
+                    }
+
+                    _values[j] = temp;
+                }
+
+                gap /= 2;
+            }
         }
         /// <summary>
         /// Выполняет быструю сортировку на основе данных
@@ -162,7 +197,38 @@ namespace Abstraction
         /// </param>
         public void FastSort(params ISorter<T>.Comparator[] comparators)
         {
-            throw new NotImplementedException();
+            int low = 0;
+            int high = _values.Count - 1;
+
+            FastSortInternal(comparators, low, high);
+        }
+        private void FastSortInternal(ISorter<T>.Comparator[] comparators, int low, int high)
+        {
+            if (low < high)
+            {
+                int pivotIndex = Partition(comparators, low, high);
+
+                FastSortInternal(comparators, low, pivotIndex - 1);
+                FastSortInternal(comparators, pivotIndex + 1, high);
+            }
+        }
+
+        private int Partition(ISorter<T>.Comparator[] comparators, int low, int high)
+        {
+            T pivot = _values[high];
+            int i = low - 1;
+
+            for (int j = low; j < high; j++)
+            {
+                if (GreaterOrEquals(comparators, _values[j], pivot))
+                {
+                    i++;
+                    Swap(i, j);
+                }
+            }
+
+            Swap(i + 1, high);
+            return i + 1;
         }
         /// <summary>
         /// Выполняет Bogo Bogo сортировку на основе данных
