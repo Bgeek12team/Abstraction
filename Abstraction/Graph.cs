@@ -276,7 +276,10 @@
             }
             return true;
         }
-
+        /// <summary>
+        /// Переопределение метода GetHashCode
+        /// </summary>
+        /// <returns></returns>
         public override int GetHashCode()
         {
             int hash = 17;

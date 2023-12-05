@@ -177,4 +177,12 @@ namespace GraphTests
         }
 
     }
+    [TestClass]
+    public class GraphOnList
+    {
+        [TestMethod]
+        public void AddEdge()
+        {
+        }
+    }
 }
