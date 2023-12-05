@@ -74,7 +74,7 @@ namespace Abstraction
         /// объектов и соответсвенно сортировка. В случае, если i-тая функция покажет равенство,
         /// будет выполняться сравнение в соотвтствии с i+1-ой
         /// </param>
-        void BogoBogoSort(params ISorter<T>.Comparator[] comparators);
+        void BogoBogoSort(IList<T> list, params ISorter<T>.Comparator[] comparators);
 
     }
     /// <summary>
@@ -228,14 +228,19 @@ namespace Abstraction
             return i + 1;
         }
 
-        private bool IsSorted(ISorter<T>.Comparator[] comparators)
+        private bool IsSorted(IList<T> list, params ISorter<T>.Comparator[] comparators)
         {
-            for (int i = 0; i < _values.Count - 1; i++)
+            List<T> copy = new List<T>(list);
+            IList<T> sublist;
+
+            do
             {
-                if (!Greater(comparators, _values[i], _values[i + 1]))
-                    return false;
-            }
-            return true;
+                Shuffle(copy);
+                sublist = copy.GetRange(0, copy.Count - 1);
+                BogoBogoSort(sublist);
+            } while (!GreaterOrEquals(comparators, copy[copy.Count - 1], sublist[sublist.Count - 1]));
+
+            return copy.SequenceEqual(list);
         }
 
         /// <summary>
@@ -247,27 +252,21 @@ namespace Abstraction
         /// объектов и соответсвенно сортировка. В случае, если i-тая функция покажет равенство,
         /// будет выполняться сравнение в соотвтствии с i+1-ой
         /// </param>
-        public void BogoBogoSort(params ISorter<T>.Comparator[] comparators)
+        public void BogoBogoSort(IList<T> subList, params ISorter<T>.Comparator[] comparators)
         {
-
-            if (!IsSorted(comparators))
-            {
-                Shuffle();
-            }
+            _values = subList;
+            if (_values.Count <= 1) 
+                return;
+            while(!IsSorted(_values))
+                Shuffle(_values);
 
         }
-        private void Shuffle()
+        private void Shuffle(IList<T> list)
         {
-            int n = _values.Count;
-            Random random = new Random();
-            while (n > 1)
-            {
-                n--;
-                for (int i = 0; i < n; i++)
-                    for (int j = 0; j < n; j++)
-                        Swap(random.Next(j, n), random.Next(i, n));
-            }
-
+            Random rand = new Random();
+            for(int i = 0; i < list.Count; i++)
+                for(int j = i + 1; j < list.Count; j++)
+                    Swap(rand.Next(i,list.Count - 1), rand.Next(j, list.Count - 1));
         }
 
         public void Randomize()
