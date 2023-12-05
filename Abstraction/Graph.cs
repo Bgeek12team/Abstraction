@@ -213,6 +213,17 @@
             _n = N;
         }
         /// <summary>
+        /// Возвращает элемент по заданной строке и столбцу
+        /// </summary>
+        /// <param name="row">Заданная строка</param>
+        /// <param name="col">Заданный столбец</param>
+        /// <returns>Элемент, имеющий координаты [строка; столбец]</returns>
+        public int this[int row, int col]
+        {
+            get { return matrixADJ[row, col]; }
+            set { matrixADJ[row, col] = value; }
+        }
+        /// <summary>
         /// Возвращает длину ребра между данными вершинами
         /// </summary>
         /// <param name="i">Вершина, из которой выходит ребро</param>
@@ -241,6 +252,41 @@
         {
             matrixADJ[i, j] = 0;
         }
+        /// <summary>
+        /// Метод для проверки на равенство значений
+        /// </summary>
+        /// <param name="graphadj">сравниваемое  число</param>
+        /// <returns>возвращает результат сравнения</returns>
+        public override bool Equals(object? graphadj)
+        {
+            if (graphadj == this)
+                return true;
+            if (graphadj == null || graphadj is not GraphOnMatrixADJ)
+                return false;
+            GraphOnMatrixADJ graphadj2 = (GraphOnMatrixADJ)graphadj;
+            for (int i = 0; i < matrixADJ.GetLength(0); i++)
+            {
+                for (int j = 0; j < matrixADJ.GetLength(0); j++)
+                {
+                    if (this[i, j] != graphadj2[i, j])
+                    {
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
+
+        public override int GetHashCode()
+        {
+            int hash = 17;
+            hash = hash * 23 + matrixADJ.GetLength(0).GetHashCode();
+            hash = hash * 23 + matrixADJ.GetLength(1).GetHashCode();
+            for (int i = 0; i < matrixADJ.GetLength(0); i++)
+                for (int j = 0; j < matrixADJ.GetLength(1); j++)
+                      hash = hash * 23 + this[i, j].GetHashCode();
+            return hash;
+        }
     }
     /// <summary>
     /// 
@@ -262,8 +308,8 @@
         /// <summary>
         /// Возвращает длину ребра между данными вершинами
         /// </summary>
-        /// <param name="i">Вершина, из которой выходит ребро</param>
-        /// <param name="j">Вершина, в которую входит ребро</param>
+        /// <param name="x">Вершина, из которой выходит ребро</param>
+        /// <param name="y">Вершина, в которую входит ребро</param>
         /// <returns>Длина ребра между вершинами</returns>
         public override int EdgeLength(int x, int y)
         {
