@@ -254,11 +254,10 @@ namespace Abstraction
         /// </param>
         public void BogoBogoSort(IList<T> subList, params ISorter<T>.Comparator[] comparators)
         {
-            _values = subList;
-            if (_values.Count <= 1) 
+            if (subList.Count <= 1) 
                 return;
-            while(!IsSorted(_values))
-                Shuffle(_values);
+            while(!IsSorted(subList))
+                Shuffle(subList);
 
         }
         private void Shuffle(IList<T> list)
