@@ -10,7 +10,7 @@ namespace Abstraction
     {
         static void Main()
         {
-            int n = 4;
+            int n = 7;
             Person[] kalibr = new Person[n];
             for (int i = 0; i < n; i++)
             {
