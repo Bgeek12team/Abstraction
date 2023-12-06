@@ -74,7 +74,7 @@ namespace Abstraction
         /// объектов и соответсвенно сортировка. В случае, если i-тая функция покажет равенство,
         /// будет выполняться сравнение в соотвтствии с i+1-ой
         /// </param>
-        void BogoBogoSort(IList<T> list, params ISorter<T>.Comparator[] comparators);
+        void BogoBogoSort(params ISorter<T>.Comparator[] comparators);
 
     }
     /// <summary>
@@ -245,19 +245,12 @@ namespace Abstraction
         /// <param name="list"></param>
         /// <param name="comparators"></param>
         /// <returns></returns>
-        private bool IsSorted(IList<T> list, params ISorter<T>.Comparator[] comparators)
+        private bool IsSorted(params ISorter<T>.Comparator[] comparators)
         {
-            List<T> copy = new List<T>(list);
-            IList<T> sublist;
-
-            do
-            {
-                Shuffle(copy);
-                sublist = copy.GetRange(0, copy.Count - 1);
-                BogoBogoSort(sublist);
-            } while (!GreaterOrEquals(comparators, copy[copy.Count - 1], sublist[sublist.Count - 1]));
-
-            return copy.SequenceEqual(list);
+            for (int i = 0; i < _values.Count - 1; i++)
+                if (Greater(comparators, _values[i], _values[i + 1]))
+                    return false;
+            return true;
         }
 
         /// <summary>
@@ -269,24 +262,13 @@ namespace Abstraction
         /// объектов и соответсвенно сортировка. В случае, если i-тая функция покажет равенство,
         /// будет выполняться сравнение в соотвтствии с i+1-ой
         /// </param>
-        public void BogoBogoSort(IList<T> subList, params ISorter<T>.Comparator[] comparators)
-        {
-            if (subList.Count <= 1) 
-                return;
-            while(!IsSorted(subList))
-                Shuffle(subList);
-
-        }
-        /// <summary>
-        /// Случайно перемешивает данную последовательность
-        /// </summary>
-        /// <param name="list"></param>
-        private void Shuffle(IList<T> list)
+        public void BogoBogoSort(params ISorter<T>.Comparator[] comparators)
         {
             Random rand = new Random();
-            for(int i = 0; i < list.Count; i++)
-                for(int j = i + 1; j < list.Count; j++)
-                    Swap(rand.Next(i,list.Count - 1), rand.Next(j, list.Count - 1));
+            while (!IsSorted(comparators))
+                for (int i = 0; i < _values.Count; i++)
+                    for (int j = i + 1; j < _values.Count; j++)
+                        Swap(rand.Next(i, _values.Count - 1), rand.Next(j, _values.Count - 1));
         }
         /// <summary>
         /// Случайно перемешивает текущую последовательность

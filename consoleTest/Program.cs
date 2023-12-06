@@ -37,7 +37,7 @@ namespace Abstraction
             politech.Randomize();
 
             Console.WriteLine("Богобого:");
-            politech.BogoBogoSort(kalibr.ToList(),compareByHeight, compareByAge);
+            politech.BogoBogoSort(compareByHeight, compareByAge);
             Console.WriteLine(politech);
             politech.Randomize();
 
