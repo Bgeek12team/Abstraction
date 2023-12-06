@@ -355,6 +355,11 @@
         {
             adjList[i].RemoveAll(adj => adj.Item1 == j);
         }
+        /// <summary>
+        /// Переопределение метода Equals
+        /// </summary>
+        /// <param name="obj">объект</param>
+        /// <returns></returns>
         public override bool Equals(object obj)
         {
             if (obj == this)
