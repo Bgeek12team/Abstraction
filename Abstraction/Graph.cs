@@ -296,7 +296,28 @@
     /// </summary>
     public class GraphOnADJList : Graph
     {
+        /// <summary>
+        /// Список смежности
+        /// </summary>
         private List<(int indxVert, int cost)>[] adjList;
+        /// <summary>
+        /// конструктор создающий список смежности по уже имеющемуся списку
+        /// </summary>
+        /// <param name="adjList"></param>
+        public GraphOnADJList(List<(int indxVert, int cost)>[] adjList)
+        {
+            this.adjList = adjList;
+        }
+        /// <summary>
+        /// Конструктор класса, создает пустой список смежности длины n
+        /// </summary>
+        /// <param name="n">длина списка</param>
+        public GraphOnADJList(int vertices)
+        {
+            adjList = new List<(int, int)>[vertices];
+            for (int i = 0; i < vertices; i++)
+                adjList[i] = new List<(int, int)>();
+        }
         /// <summary>
         /// Добавляет ребро между данными вершинами
         /// </summary>
@@ -305,8 +326,13 @@
         /// <param name="len">Длина ребра между вершинами</param>
         public override void AddEdge(int i, int j, int len)
         {
-            adjList[i].Add((j,len));
-            adjList[j].Add((i,len));
+            if (i == j)
+                adjList[i].Add((i, len));
+            else
+            {
+                adjList[i].Add((j, len));
+                adjList[j].Add((i, len));
+            }
         }
         /// <summary>
         /// Возвращает длину ребра между данными вершинами

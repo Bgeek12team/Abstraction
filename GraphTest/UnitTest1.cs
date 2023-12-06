@@ -183,6 +183,18 @@ namespace GraphTests
         [TestMethod]
         public void AddEdge()
         {
+            int n = 3;
+            List<(int indxVert, int cost)>[] adjList = new List<(int indxVert, int cost)>[n];
+            adjList[0] = new List<(int indxVert, int cost)>();
+            adjList[0].Add((1, 1)); adjList[0].Add((2, 1));
+            adjList[1] = new List<(int indxVert, int cost)>();
+            adjList[1].Add((0, 1)); adjList[1].Add((2, 1));
+            adjList[2] = new List<(int indxVert, int cost)>();
+            adjList[2].Add((0, 1)); adjList[2].Add((1, 1));
+            GraphOnADJList list = new(3);
+            list.AddEdge(0, 0, 5);
+            list.AddEdge(1, 1, 5);
+
         }
     }
 }
