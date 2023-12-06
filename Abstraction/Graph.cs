@@ -318,20 +318,6 @@
             for (int i = 0; i < vertices; i++)
                 adjList[i] = new List<(int, int)>();
         }
-        /// <summary>
-        /// Добавляет ребро между данными вершинами
-        /// </summary>
-        /// <param name="i">Вершина, из которой выходит ребро</param>
-        /// <param name="j">Вершина, в которую входит ребро</param>
-        /// <param name="len">Длина ребра между вершинами</param>
-        public GraphOnADJList(int vertices)
-        {
-            adjList = new List<(int, int)>[vertices];
-            for (int i = 0; i < vertices; i++)
-            {
-                adjList[i] = new List<(int, int)>();
-            }
-        }
         public override void AddEdge(int i, int j, int len)
         {
             if (i == j)
