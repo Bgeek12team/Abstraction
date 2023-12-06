@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace Abstraction
 {
+    
     static class P
     {
         static void Main()
