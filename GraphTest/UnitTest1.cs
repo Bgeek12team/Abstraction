@@ -273,5 +273,19 @@ namespace GraphTests
             ints.BogoBogoSort(comparebymax);
             Assert.AreEqual(ints1.ToString(), ints.ToString());
         }
+        /// <summary>
+        /// “ест, провер€щий отсортирован ли массив
+        /// </summary>
+        [TestMethod]
+        public void TestPancake()
+        {
+            IList<int> nums = new List<int> { -20321, 0, 64321, 54, 1000000, -932832, -2, 9, 1, 14 };
+            IList<int> nums1 = new List<int>() { -932832, -20321, -2, 0, 1, 9, 14, 54, 64321, 1000000 };
+            UniSorter<int> ints = new UniSorter<int>(nums);
+            UniSorter<int> ints1 = new UniSorter<int>(nums1);
+            ISorter<int>.Comparator comparebymax = new ISorter<int>.Comparator((p1, p2) => p1 - p2);
+            ints.BogoBogoSort(comparebymax);
+            Assert.AreEqual(ints1.ToString(), ints.ToString());
+        }
     }
 }
