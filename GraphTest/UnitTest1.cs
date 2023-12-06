@@ -181,20 +181,106 @@ namespace GraphTests
     public class GraphOnList
     {
         [TestMethod]
-        public void AddEdge()
+        public void AddEdge1()
+        {
+            int n = 2;
+            List<(int indxVert, int cost)>[] adjList = new List<(int indxVert, int cost)>[n];
+            adjList[0] = new List<(int indxVert, int cost)>();
+            adjList[0].Add((0, 5));
+            adjList[1] = new List<(int indxVert, int cost)>();
+            adjList[1].Add((1, 5));
+            GraphOnADJList list1 = new(adjList);
+            GraphOnADJList list = new(n);
+            list.AddEdge(0, 0, 5);
+            list.AddEdge(1, 1, 5);
+            Assert.IsTrue(list.Equals(list1));
+
+        }
+        [TestMethod]
+        public void AddEdge2()
         {
             int n = 3;
             List<(int indxVert, int cost)>[] adjList = new List<(int indxVert, int cost)>[n];
             adjList[0] = new List<(int indxVert, int cost)>();
-            adjList[0].Add((1, 1)); adjList[0].Add((2, 1));
+            adjList[0].Add((0, 0)); adjList[0].Add((1, 1)); adjList[0].Add((2, 1));
             adjList[1] = new List<(int indxVert, int cost)>();
-            adjList[1].Add((0, 1)); adjList[1].Add((2, 1));
+            adjList[1].Add((0, 1)); adjList[1].Add((1, 5)); adjList[1].Add((2, 1));
             adjList[2] = new List<(int indxVert, int cost)>();
-            adjList[2].Add((0, 1)); adjList[2].Add((1, 1));
-            GraphOnADJList list = new(3);
-            list.AddEdge(0, 0, 5);
-            list.AddEdge(1, 1, 5);
-
+            adjList[2].Add((0, 1)); adjList[2].Add((1, 1)); adjList[2].Add((2, 0));
+            GraphOnADJList list1 = new(adjList);
+            GraphOnADJList list = new(n);
+            list.AddEdge(0, 0, 0); list.AddEdge(0, 1, 1); list.AddEdge(0, 2, 1);
+            list.AddEdge(1, 0, 1); list.AddEdge(1, 1, 5); list.AddEdge(1, 2, 1);
+            list.AddEdge(2, 0, 1); list.AddEdge(2, 1, 1); list.AddEdge(2, 2, 0);
+            Assert.IsTrue(list.Equals(list1));
+        }
+        [TestMethod]
+        public void AddEdge3()
+        {
+            int n = 3;
+            List<(int indxVert, int cost)>[] adjList = new List<(int indxVert, int cost)>[n];
+            adjList[0] = new List<(int indxVert, int cost)>();
+            adjList[0].Add((0, 0)); adjList[0].Add((1, 0)); adjList[0].Add((2, 0));
+            adjList[1] = new List<(int indxVert, int cost)>();
+            adjList[1].Add((0, 0)); adjList[1].Add((1, 0)); adjList[1].Add((2, 0));
+            adjList[2] = new List<(int indxVert, int cost)>();
+            adjList[2].Add((0, 0)); adjList[2].Add((1, 0)); adjList[2].Add((2, 0));
+            GraphOnADJList list1 = new(adjList);
+            GraphOnADJList list = new(n);
+            list.AddEdge(0, 0, 0); list.AddEdge(0, 1, 0); list.AddEdge(0, 2, 0);
+            list.AddEdge(1, 0, 0); list.AddEdge(1, 1, 0); list.AddEdge(1, 2, 0);
+            list.AddEdge(2, 0, 0); list.AddEdge(2, 1, 0); list.AddEdge(2, 2, 0);
+            Assert.IsTrue(list.Equals(list1));
+        }
+        [TestMethod]
+        public void AddEdge4()
+        {
+            int n = 3;
+            List<(int indxVert, int cost)>[] adjList = new List<(int indxVert, int cost)>[n];
+            adjList[0] = new List<(int indxVert, int cost)>();
+            adjList[0].Add((0, 1000000)); adjList[0].Add((1, 1000000)); adjList[0].Add((2, 1000000));
+            adjList[1] = new List<(int indxVert, int cost)>();
+            adjList[1].Add((0, 1000000)); adjList[1].Add((1, 1000000)); adjList[1].Add((2, 1000000));
+            adjList[2] = new List<(int indxVert, int cost)>();
+            adjList[2].Add((0, 1000000)); adjList[2].Add((1, 1000000)); adjList[2].Add((2, 1000000));
+            GraphOnADJList list1 = new(adjList);
+            GraphOnADJList list = new(n);
+            list.AddEdge(0, 0, 1000000); list.AddEdge(0, 1, 1000000); list.AddEdge(0, 2, 1000000);
+            list.AddEdge(1, 0, 1000000); list.AddEdge(1, 1, 1000000); list.AddEdge(1, 2, 1000000);
+            list.AddEdge(2, 0, 1000000); list.AddEdge(2, 1, 1000000); list.AddEdge(2, 2, 1000000);
+            Assert.IsTrue(list.Equals(list1));
+        }
+        [TestMethod]
+        public void Removeedge()
+        {
+            int n = 3;
+            List<(int indxVert, int cost)>[] adjList = new List<(int indxVert, int cost)>[n];
+            adjList[0] = new List<(int indxVert, int cost)>();
+            adjList[0].Add((0, 12)); adjList[0].Add((1, 12)); adjList[0].Add((2, 12));
+            adjList[1] = new List<(int indxVert, int cost)>();
+            adjList[1].Add((0, 13)); adjList[1].Add((1, 13)); adjList[1].Add((2, 13));
+            adjList[2] = new List<(int indxVert, int cost)>();
+            adjList[2].Add((0, 14)); adjList[2].Add((1, 14)); adjList[2].Add((2, 14));
+            GraphOnADJList list1 = new(adjList);
+            for (int i = 0; i < n; i++)
+                for (int j = 0; j < n; j++)
+                    list1.RemoveEdge(i, j);
+            GraphOnADJList list = new(n);
+            Assert.IsTrue(list.Equals(list1));
+        }
+        [TestMethod]
+        public void GetEdgeLeght()
+        {
+            int n = 3;
+            List<(int indxVert, int cost)>[] adjList = new List<(int indxVert, int cost)>[n];
+            adjList[0] = new List<(int indxVert, int cost)>();
+            adjList[0].Add((0, 12)); adjList[0].Add((1, 100000000)); adjList[0].Add((2, 12));
+            adjList[1] = new List<(int indxVert, int cost)>();
+            adjList[1].Add((0, 13)); adjList[1].Add((1, 13)); adjList[1].Add((2, 13));
+            adjList[2] = new List<(int indxVert, int cost)>();
+            adjList[2].Add((0, 14)); adjList[2].Add((1, 14)); adjList[2].Add((2, 14));
+            GraphOnADJList list1 = new(adjList);
+            Assert.AreEqual(100000000, list1.EdgeLength(0, 1));
         }
     }
     /// <summary>

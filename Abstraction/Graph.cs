@@ -355,5 +355,26 @@
         {
             adjList[i].RemoveAll(adj => adj.Item1 == j);
         }
+        public override bool Equals(object obj)
+        {
+            if (obj == this)
+                return true;
+            if (obj == null || obj is not GraphOnADJList)
+                return false;
+            GraphOnADJList gr = (GraphOnADJList)obj;
+            List<(int indxVert, int cost)>[] other = gr.adjList;
+            if (adjList.Length != other.Length)
+                return false;
+            for (int i = 0; i < adjList.Length; i++)
+            {
+                if (adjList[i].Count != other[i].Count)
+                    return false;
+                for (int j = 0; j < adjList[i].Count; j++)
+                    if (adjList[i][j].indxVert != other[i][j].indxVert || adjList[i][j].cost != other[i][j].cost)
+                        return false;
+            }
+
+            return true;
+        }
     }
 }
