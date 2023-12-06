@@ -76,6 +76,8 @@ namespace Abstraction
         /// </param>
         void BogoBogoSort(params ISorter<T>.Comparator[] comparators);
 
+        void PancakeSort(params ISorter<T>.Comparator[] comparators);
+
     }
     /// <summary>
     /// Класс-надстройка над индексированной последовательностью элементов,
@@ -271,6 +273,55 @@ namespace Abstraction
                         Swap(rand.Next(i, _values.Count - 1), rand.Next(j, _values.Count - 1));
         }
         /// <summary>
+        /// Выполняет сортировку на основе данных функций сортировки
+        /// Методом блинной сортировки
+        /// </summary>
+        /// <param name="comparators"></param>
+        public void PancakeSort(params ISorter<T>.Comparator[] comparators)
+        {
+            for (var subArrayLength = _values.Count - 1; subArrayLength >= 0; subArrayLength--)
+            {
+                var indexOfMax = IndexOfMax(comparators, subArrayLength);
+                if (indexOfMax != subArrayLength)
+                {
+                    //переворот массива до индекса максимального элемента
+                    Flip(indexOfMax);
+                    Flip(subArrayLength);
+                }
+            }
+        }
+        /// <summary>
+        /// Метод для получения индекса максимального элемента
+        /// </summary>
+        /// <param name="comparators"></param>
+        /// <param name="n"></param>
+        /// <returns></returns>
+        private int IndexOfMax(ISorter<T>.Comparator[] comparators, int n)
+        {
+            int result = 0;
+            for (var i = 1; i <= n; ++i)
+            {
+                if (GreaterOrEquals(comparators, _values[i], _values[result]))
+                {
+                    result = i;
+                }
+            }
+            return result;
+        }
+        /// <summary>
+        /// Метод для переворота элементов
+        /// </summary>
+        /// <param name="end"></param>
+        private void Flip(int end)
+        {
+            for (var start = 0; start < end; start++, end--)
+            {
+                var temp = _values[start];
+                _values[start] = _values[end];
+                _values[end] = temp;
+            }
+        }
+        /// <summary>
         /// Случайно перемешивает текущую последовательность
         /// </summary>
         public void Randomize()
@@ -406,7 +457,6 @@ namespace Abstraction
         {
             return ((IEnumerable)_values).GetEnumerator();
         }
-
         #endregion
     }
 }

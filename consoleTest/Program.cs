@@ -22,17 +22,17 @@ namespace Abstraction
                 = new ISorter<Person>.Comparator((p1, p2) => p1.Height - p2.Height);
             ISorter<Person>.Comparator compareByAge
                 = new ISorter<Person>.Comparator((p1, p2) => p1.Age - p2.Age);
-
+            politech.Randomize();
             Console.WriteLine(politech);
 
             politech.BubbleSort(compareByHeight);
             Console.WriteLine(politech);
             politech.Randomize();
-
-            politech.BogoBogoSort(kalibr.ToList(),compareByHeight);
+            
+            politech.BogoBogoSort(compareByHeight);
             Console.WriteLine(politech);
             politech.Randomize();
-
+            
             politech.InsertSort(compareByHeight);
             Console.WriteLine(politech);
             politech.Randomize();
@@ -42,6 +42,9 @@ namespace Abstraction
             politech.Randomize();
 
             politech.FastSort(compareByHeight);
+            Console.WriteLine(politech);
+            politech.Randomize();
+            politech.PancakeSort(compareByHeight);
             Console.WriteLine(politech);
             politech.Randomize();
         }
