@@ -28,7 +28,7 @@ namespace Abstraction
             politech.BubbleSort(compareByHeight);
             Console.WriteLine(politech);
             politech.Randomize();
-            
+
             politech.BogoBogoSort(compareByHeight);
             Console.WriteLine(politech);
             politech.Randomize();
