@@ -213,6 +213,17 @@
             _n = N;
         }
         /// <summary>
+        /// Возвращает элемент по заданной строке и столбцу
+        /// </summary>
+        /// <param name="row">Заданная строка</param>
+        /// <param name="col">Заданный столбец</param>
+        /// <returns>Элемент, имеющий координаты [строка; столбец]</returns>
+        public int this[int row, int col]
+        {
+            get { return matrixADJ[row, col]; }
+            set { matrixADJ[row, col] = value; }
+        }
+        /// <summary>
         /// Возвращает длину ребра между данными вершинами
         /// </summary>
         /// <param name="i">Вершина, из которой выходит ребро</param>
@@ -241,13 +252,72 @@
         {
             matrixADJ[i, j] = 0;
         }
+        /// <summary>
+        /// Метод для проверки на равенство значений
+        /// </summary>
+        /// <param name="graphadj">сравниваемое  число</param>
+        /// <returns>возвращает результат сравнения</returns>
+        public override bool Equals(object? graphadj)
+        {
+            if (graphadj == this)
+                return true;
+            if (graphadj == null || graphadj is not GraphOnMatrixADJ)
+                return false;
+            GraphOnMatrixADJ graphadj2 = (GraphOnMatrixADJ)graphadj;
+            for (int i = 0; i < matrixADJ.GetLength(0); i++)
+            {
+                for (int j = 0; j < matrixADJ.GetLength(0); j++)
+                {
+                    if (this[i, j] != graphadj2[i, j])
+                    {
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
+        /// <summary>
+        /// Переопределение метода GetHashCode
+        /// </summary>
+        /// <returns></returns>
+        public override int GetHashCode()
+        {
+            int hash = 17;
+            hash = hash * 23 + matrixADJ.GetLength(0).GetHashCode();
+            hash = hash * 23 + matrixADJ.GetLength(1).GetHashCode();
+            for (int i = 0; i < matrixADJ.GetLength(0); i++)
+                for (int j = 0; j < matrixADJ.GetLength(1); j++)
+                      hash = hash * 23 + this[i, j].GetHashCode();
+            return hash;
+        }
     }
     /// <summary>
     /// 
     /// </summary>
     public class GraphOnADJList : Graph
     {
+        /// <summary>
+        /// Список смежности
+        /// </summary>
         private List<(int indxVert, int cost)>[] adjList;
+        /// <summary>
+        /// конструктор создающий список смежности по уже имеющемуся списку
+        /// </summary>
+        /// <param name="adjList"></param>
+        public GraphOnADJList(List<(int indxVert, int cost)>[] adjList)
+        {
+            this.adjList = adjList;
+        }
+        /// <summary>
+        /// Конструктор класса, создает пустой список смежности длины n
+        /// </summary>
+        /// <param name="n">длина списка</param>
+        public GraphOnADJList(int vertices)
+        {
+            adjList = new List<(int, int)>[vertices];
+            for (int i = 0; i < vertices; i++)
+                adjList[i] = new List<(int, int)>();
+        }
         /// <summary>
         /// Добавляет ребро между данными вершинами
         /// </summary>
@@ -264,21 +334,26 @@
         }
         public override void AddEdge(int i, int j, int len)
         {
-            adjList[i].Add((j,len));
-            adjList[j].Add((i,len));
+            if (i == j)
+                adjList[i].Add((i, len));
+            else
+            {
+                adjList[i].Add((j, len));
+                adjList[j].Add((i, len));
+            }
         }
         /// <summary>
         /// Возвращает длину ребра между данными вершинами
         /// </summary>
-        /// <param name="i">Вершина, из которой выходит ребро</param>
-        /// <param name="j">Вершина, в которую входит ребро</param>
+        /// <param name="x">Вершина, из которой выходит ребро</param>
+        /// <param name="y">Вершина, в которую входит ребро</param>
         /// <returns>Длина ребра между вершинами</returns>
         public override int EdgeLength(int x, int y)
         {
             foreach (var edge in adjList[x])
                 if (y == edge.indxVert)
                     return edge.cost;
-            return -1;
+            return 0;
         }
         /// <summary>
         /// Удаляет ребро между веришнами
