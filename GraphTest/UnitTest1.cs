@@ -177,9 +177,15 @@ namespace GraphTests
         }
 
     }
+    /// <summary>
+    /// “есты класса GraphOnList
+    /// </summary>
     [TestClass]
     public class GraphOnList
     {
+        /// <summary>
+        /// “еструющий метод провер€ющий метод AddEdge класса GraphOnADJList
+        /// </summary>
         [TestMethod]
         public void AddEdge1()
         {
@@ -196,6 +202,9 @@ namespace GraphTests
             Assert.IsTrue(list.Equals(list1));
 
         }
+        /// <summary>
+        /// “еструющий метод провер€ющий метод AddEdge класса GraphOnADJList
+        /// </summary>
         [TestMethod]
         public void AddEdge2()
         {
@@ -214,6 +223,9 @@ namespace GraphTests
             list.AddEdge(2, 0, 1); list.AddEdge(2, 1, 1); list.AddEdge(2, 2, 0);
             Assert.IsTrue(list.Equals(list1));
         }
+        /// <summary>
+        /// “еструющий метод провер€ющий метод AddEdge класса GraphOnADJList
+        /// </summary>
         [TestMethod]
         public void AddEdge3()
         {
@@ -232,6 +244,9 @@ namespace GraphTests
             list.AddEdge(2, 0, 0); list.AddEdge(2, 1, 0); list.AddEdge(2, 2, 0);
             Assert.IsTrue(list.Equals(list1));
         }
+        /// <summary>
+        /// “еструющий метод провер€ющий метод AddEdge класса GraphOnADJList
+        /// </summary>
         [TestMethod]
         public void AddEdge4()
         {
@@ -250,6 +265,9 @@ namespace GraphTests
             list.AddEdge(2, 0, 1000000); list.AddEdge(2, 1, 1000000); list.AddEdge(2, 2, 1000000);
             Assert.IsTrue(list.Equals(list1));
         }
+        /// <summary>
+        /// “еструющий метод провер€ющий метод RemoveEdge класса GraphOnADJList
+        /// </summary>
         [TestMethod]
         public void Removeedge()
         {
@@ -268,6 +286,9 @@ namespace GraphTests
             GraphOnADJList list = new(n);
             Assert.IsTrue(list.Equals(list1));
         }
+        /// <summary>
+        /// “еструющий метод провер€ющий метод EdgeLength класса GraphOnADJList
+        /// </summary>
         [TestMethod]
         public void GetEdgeLeght()
         {
