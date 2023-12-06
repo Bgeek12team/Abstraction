@@ -10,12 +10,17 @@ namespace Abstraction
     {
         static void Main()
         {
-            int n = 4;
+            int n = 7;
             Person[] kalibr = new Person[n];
-            for (int i = 0; i < n; i++)
-            {
-                kalibr[i] = new Person();
-            }
+            //for (int i = 0; i < n; i++)
+            //    kalibr[i] = new Person();
+            kalibr[0] = new Person(181, 18);
+            kalibr[1] = new Person(181, 19);
+            kalibr[2] = new Person(173, 19);
+            kalibr[3] = new Person(177, 19);
+            kalibr[4] = new Person(174, 19);
+            kalibr[5] = new Person(181, 20);
+            kalibr[6] = new Person(178, 19);
 
             UniSorter<Person> politech = new UniSorter<Person>(kalibr);
             ISorter<Person>.Comparator compareByHeight
@@ -23,25 +28,31 @@ namespace Abstraction
             ISorter<Person>.Comparator compareByAge
                 = new ISorter<Person>.Comparator((p1, p2) => p1.Age - p2.Age);
 
+            Console.WriteLine("Исходный:");
             Console.WriteLine(politech);
 
-            politech.BubbleSort(compareByHeight);
-            Console.WriteLine(politech);
-            politech.Randomize();
-
-            politech.BogoBogoSort(kalibr.ToList(),compareByHeight);
+            Console.WriteLine("Пузырьковая:");
+            politech.BubbleSort(compareByHeight, compareByAge);
             Console.WriteLine(politech);
             politech.Randomize();
 
-            politech.InsertSort(compareByHeight);
+            Console.WriteLine("Богобого:");
+            politech.BogoBogoSort(kalibr.ToList(),compareByHeight, compareByAge);
             Console.WriteLine(politech);
             politech.Randomize();
 
-            politech.ShellSort(compareByHeight);
+            Console.WriteLine("Вставками:");
+            politech.InsertSort(compareByHeight, compareByAge);
             Console.WriteLine(politech);
             politech.Randomize();
 
-            politech.FastSort(compareByHeight);
+            Console.WriteLine("Шелла:");
+            politech.ShellSort(compareByHeight, compareByAge);
+            Console.WriteLine(politech);
+            politech.Randomize();
+
+            Console.WriteLine("Быстрая:");
+            politech.FastSort(compareByHeight, compareByAge);
             Console.WriteLine(politech);
             politech.Randomize();
         }

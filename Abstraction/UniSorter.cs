@@ -20,9 +20,9 @@ namespace Abstraction
         /// <param name="val1">Первый сравниваемый элемент</param>
         /// <param name="val2">Второй сравниваемый элемент</param>
         /// <returns>
-        /// 1: val1 > val2
+        /// любое число больше 0: val1 > val2
         /// 0: val1 == val2
-        /// -1: val1 < val2
+        /// любое число меньше 0: val1 < val2
         /// </returns>
         delegate int Comparator(T val1, T val2);
         /// <summary>
@@ -199,6 +199,12 @@ namespace Abstraction
 
             FastSortInternal(comparators, low, high);
         }
+        /// <summary>
+        /// Вспомогательная рекурсивная функция для быстрой сортировки
+        /// </summary>
+        /// <param name="comparators"></param>
+        /// <param name="low"></param>
+        /// <param name="high"></param>
         private void FastSortInternal(ISorter<T>.Comparator[] comparators, int low, int high)
         {
             if (low < high)
@@ -209,7 +215,13 @@ namespace Abstraction
                 FastSortInternal(comparators, pivotIndex + 1, high);
             }
         }
-
+        /// <summary>
+        /// Вспомогательная фукция для быстрой сортировки
+        /// </summary>
+        /// <param name="comparators"></param>
+        /// <param name="low"></param>
+        /// <param name="high"></param>
+        /// <returns></returns>
         private int Partition(ISorter<T>.Comparator[] comparators, int low, int high)
         {
             T pivot = _values[high];
@@ -217,7 +229,7 @@ namespace Abstraction
 
             for (int j = low; j < high; j++)
             {
-                if (!GreaterOrEquals(comparators, _values[j], pivot))
+                if (GreaterOrEquals(comparators, pivot, _values[j]))
                 {
                     i++;
                     Swap(i, j);
@@ -227,7 +239,12 @@ namespace Abstraction
             Swap(i + 1, high);
             return i + 1;
         }
-
+        /// <summary>
+        /// Проверяет упорядоченность массива для BogoBogo сортировки
+        /// </summary>
+        /// <param name="list"></param>
+        /// <param name="comparators"></param>
+        /// <returns></returns>
         private bool IsSorted(IList<T> list, params ISorter<T>.Comparator[] comparators)
         {
             List<T> copy = new List<T>(list);
@@ -260,6 +277,10 @@ namespace Abstraction
                 Shuffle(subList);
 
         }
+        /// <summary>
+        /// Случайно перемешивает данную последовательность
+        /// </summary>
+        /// <param name="list"></param>
         private void Shuffle(IList<T> list)
         {
             Random rand = new Random();
@@ -267,17 +288,22 @@ namespace Abstraction
                 for(int j = i + 1; j < list.Count; j++)
                     Swap(rand.Next(i,list.Count - 1), rand.Next(j, list.Count - 1));
         }
-
+        /// <summary>
+        /// Случайно перемешивает текущую последовательность
+        /// </summary>
         public void Randomize()
         {
-            int[] index = new int[_values.Count];
             Random rnd = new Random();
-            for (int i = 0; i < index.Length; i++)
+            for (int i = 0; i < _values.Count; i++)
             {
-                int rndIndex = rnd.Next(0, index.Length - 1);
+                int rndIndex = rnd.Next(0, _values.Count - 1);
                 Swap(i, rndIndex);
             }
         }
+        /// <summary>
+        /// Возвращает строковое отбражение последовательности
+        /// </summary>
+        /// <returns>Строковое отображение последовательности</returns>
         public override string ToString()
         {
             string res = String.Empty;
