@@ -211,8 +211,10 @@ namespace Abstraction
             {
                 int pivotIndex = Partition(comparators, low, high);
 
-                FastSortInternal(comparators, low, pivotIndex - 1);
-                FastSortInternal(comparators, pivotIndex + 1, high);
+                Parallel.Invoke(
+                () => { FastSortInternal(comparators, low, pivotIndex - 1); },
+                () => { FastSortInternal(comparators, pivotIndex + 1, high); }
+                );
             }
         }
         /// <summary>

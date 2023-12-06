@@ -29,7 +29,7 @@ namespace Abstraction
             Console.WriteLine(politech);
             politech.Randomize();
 
-            politech.BogoBogoSort(kalibr.ToList(),compareByHeight);
+            politech.BogoBogoSort(compareByHeight);
             Console.WriteLine(politech);
             politech.Randomize();
 

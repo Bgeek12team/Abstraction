@@ -339,7 +339,6 @@
             else
             {
                 adjList[i].Add((j, len));
-                adjList[j].Add((i, len));
             }
         }
         /// <summary>
@@ -363,7 +362,6 @@
         public override void RemoveEdge(int i, int j)
         {
             adjList[i].RemoveAll(adj => adj.Item1 == j);
-            adjList[j].RemoveAll(adj => adj.Item1 == i);
         }
     }
 }
