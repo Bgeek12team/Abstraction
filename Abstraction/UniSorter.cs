@@ -75,7 +75,15 @@ namespace Abstraction
         /// будет выполняться сравнение в соотвтствии с i+1-ой
         /// </param>
         void BogoBogoSort(params ISorter<T>.Comparator[] comparators);
-
+        /// <summary>
+        /// Выполняет блинную сортировку на основе данных
+        /// функций сортировки
+        /// </summary>
+        /// <param name="comparators">
+        /// Набор функций-компараторов, на основе которых будет выполняться сравнение 
+        /// объектов и соответсвенно сортировка. В случае, если i-тая функция покажет равенство,
+        /// будет выполняться сравнение в соотвтствии с i+1-ой
+        /// </param>
         void PancakeSort(params ISorter<T>.Comparator[] comparators);
 
     }
